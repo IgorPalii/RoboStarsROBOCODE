@@ -80,6 +80,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChangeTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""94dcabc7-b878-465e-9c9d-56a45d2042cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,6 +267,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""499aace2-7902-4845-aab9-eba807255758"",
+                    ""path"": ""<Keyboard>/#(Q)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -272,6 +292,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_CharacterController_Fire = m_CharacterController.FindAction("Fire", throwIfNotFound: true);
         m_CharacterController_Use = m_CharacterController.FindAction("Use", throwIfNotFound: true);
         m_CharacterController_Crouch = m_CharacterController.FindAction("Crouch", throwIfNotFound: true);
+        m_CharacterController_ChangeTarget = m_CharacterController.FindAction("ChangeTarget", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterController_Fire;
     private readonly InputAction m_CharacterController_Use;
     private readonly InputAction m_CharacterController_Crouch;
+    private readonly InputAction m_CharacterController_ChangeTarget;
     public struct CharacterControllerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -349,6 +371,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Fire => m_Wrapper.m_CharacterController_Fire;
         public InputAction @Use => m_Wrapper.m_CharacterController_Use;
         public InputAction @Crouch => m_Wrapper.m_CharacterController_Crouch;
+        public InputAction @ChangeTarget => m_Wrapper.m_CharacterController_ChangeTarget;
         public InputActionMap Get() { return m_Wrapper.m_CharacterController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -376,6 +399,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @ChangeTarget.started += instance.OnChangeTarget;
+            @ChangeTarget.performed += instance.OnChangeTarget;
+            @ChangeTarget.canceled += instance.OnChangeTarget;
         }
 
         private void UnregisterCallbacks(ICharacterControllerActions instance)
@@ -398,6 +424,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @ChangeTarget.started -= instance.OnChangeTarget;
+            @ChangeTarget.performed -= instance.OnChangeTarget;
+            @ChangeTarget.canceled -= instance.OnChangeTarget;
         }
 
         public void RemoveCallbacks(ICharacterControllerActions instance)
@@ -423,5 +452,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnChangeTarget(InputAction.CallbackContext context);
     }
 }

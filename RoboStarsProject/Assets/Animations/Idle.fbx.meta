@@ -5,15 +5,30 @@ ModelImporter:
   internalIDToNameTable: []
   externalObjects:
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Vampire_MAT1
-    second: {fileID: 2100000, guid: 457c3e678459a354ea41369ab15c559b, type: 2}
+      name: Vampire_diffuse
+    second: {fileID: 2800000, guid: c6585211c6213d84f8255d6a78ca249d, type: 3}
   - first:
-      type: UnityEngine:Material
+      type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
-      name: Vampire_MAT_Transparent
-    second: {fileID: 2100000, guid: 6dba780c7c835eb4a954e2a345aa3c07, type: 2}
+      name: Vampire_diffuse_transparent
+    second: {fileID: 2800000, guid: 08187c76799235d4bbcc1ee4c82ace90, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Vampire_emission
+    second: {fileID: 2800000, guid: 27b73cb99bb440d49a3ac485dd2f6ee2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Vampire_normal
+    second: {fileID: 2800000, guid: ca3129138c34056428155dde28529fbb, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Vampire_specular
+    second: {fileID: 2800000, guid: 26dc5802de391c541bd1704d1122995d, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
-public class MainCharacter : MonoBehaviour
+public class MainCharacter : MonoBehaviourPunCallbacks
 {
     [SerializeField]
     private PlayerInputActions inputActions;
@@ -11,33 +12,52 @@ public class MainCharacter : MonoBehaviour
     private CharacterController cController;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private PhotonView pViev;
+    [SerializeField]
+    private CameraFollow charCamera;
 
     private Vector2 movementInput;
     private Vector3 currentMovement;
+    private Vector3 spawnPos;
     private Quaternion rotateDir;
 
     private bool isRun, isWalk;
-    private float rotateSpeed;
+    private float rotateSpeed = 10f;
 
     private void Awake()
+    {
+        spawnPos = new Vector3 (-5, 8.15f, 2);
+        InitInputActions();
+        if (!pViev.IsMine)
+        {
+            Destroy(charCamera.gameObject);
+        }
+    }
+
+    private void InitInputActions()
     {
         inputActions = new PlayerInputActions();
         inputActions.CharacterController.Movement.started += OnMovementActions;
         inputActions.CharacterController.Movement.performed += OnMovementActions;
         inputActions.CharacterController.Movement.canceled += OnMovementActions;
+        inputActions.CharacterController.Movement.started += OnCameraMovement;
+        inputActions.CharacterController.Movement.performed += OnCameraMovement;
+        inputActions.CharacterController.Movement.canceled += OnCameraMovement;
         inputActions.CharacterController.Run.started += OnRun;
         inputActions.CharacterController.Run.canceled += OnRun;
-        rotateSpeed = 10f;
     }
 
     private void Update()
     {
+        if (!pViev.IsMine) return;
         AnimateControl();
         PlayerRotate();
     }
 
     private void FixedUpdate()
     {
+        if (!pViev.IsMine) return;
         cController.Move(currentMovement * Time.fixedDeltaTime);
     }
 
@@ -54,6 +74,13 @@ public class MainCharacter : MonoBehaviour
         transform.rotation = rotateDir;
     }
 
+    private void Respawn()
+    {
+        cController.enabled = false;
+        transform.position = spawnPos;
+        cController.enabled = true;
+    }
+
     private void OnMovementActions(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
@@ -65,6 +92,11 @@ public class MainCharacter : MonoBehaviour
     private void OnRun(InputAction.CallbackContext context)
     {
         isRun = context.ReadValueAsButton();
+    }
+
+    private void OnCameraMovement(InputAction.CallbackContext context)
+    {
+        charCamera.SetOffset(currentMovement);
     }
 
     private void OnEnable()

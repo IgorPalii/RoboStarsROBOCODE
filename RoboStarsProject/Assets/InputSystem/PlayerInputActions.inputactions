@@ -1,5 +1,5 @@
 {
-    "name": "PlayerInput",
+    "name": "PlayerInputActions",
     "maps": [
         {
             "name": "CharacterController",
@@ -54,6 +54,15 @@
                     "name": "Crouch",
                     "type": "Button",
                     "id": "d80f2536-5eb3-49a5-975e-7a87d7c54972",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ChangeTarget",
+                    "type": "Button",
+                    "id": "94dcabc7-b878-465e-9c9d-56a45d2042cf",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -234,6 +243,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "499aace2-7902-4845-aab9-eba807255758",
+                    "path": "<Keyboard>/#(Q)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeTarget",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
