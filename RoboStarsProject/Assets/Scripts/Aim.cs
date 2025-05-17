@@ -10,14 +10,13 @@ public class Aim : MonoBehaviour
     [SerializeField]
     private Transform spawnT;
     [SerializeField]
-    private List<GameObject> targets;
-    [SerializeField]
     private GameObject targetMark;
     [SerializeField]
     private PhotonView pView;
     [SerializeField]
     private CharacterController cController;
 
+    private List<GameObject> targets;
     private PlayerInputActions playerInput;   
     private GameObject targetObj;
 
@@ -30,18 +29,27 @@ public class Aim : MonoBehaviour
         playerInput = new PlayerInputActions();
     }
 
-    private void Update()
+    private void Start()
     {
-        
+        if (!pView.IsMine) return;
+
+        targetMark.SetActive(false);
+        playerInput.CharacterController.ChangeTarget.started += SelectNewTarget;
     }
 
-    private void SetTarget()
+    private void FixedUpdate()
+    {
+        if (!pView.IsMine) return;
+        SelectTarget();
+    }
+
+    private void SelectTarget()
     {
         if (cController.velocity == Vector3.zero)
         {
             if (canSearch)
             {
-                InvokeRepeating("", 0f, 0.5f);
+                InvokeRepeating("Calculate", 0f, 0.5f);
             }
         }
         else
@@ -56,13 +64,51 @@ public class Aim : MonoBehaviour
         }
     }
 
-    private void OnEnable()
+    private void Calculate()
     {
-        playerInput.CharacterController.Enable();
+        canSearch = false;
+        targets.Clear();
+
+        RaycastHit[] raycastHits = Physics.SphereCastAll(transform.position, range, transform.position, range);
+        foreach (RaycastHit hit in raycastHits)
+        {
+            GameObject tempObj = hit.transform.gameObject;
+            if (tempObj.GetComponent<CharacterController>() && !tempObj.GetComponentInParent<PhotonView>().IsMine)
+            {
+                targets.Add(tempObj);
+            }
+            else continue;
+        }
+        SelectNewTarget();
     }
 
-    private void OnDisable()
+    private void SelectNewTarget()
     {
+        foreach (GameObject target in targets) 
+        {
+            target.GetComponent<Aim>().SetTargetStatus(false);
+        }
+
+        if (targetCount >= targets.Count)
+        {
+            targetCount = 0;
+        }
+
+        targetObj = targets[targetCount];
+        targets[targetCount].GetComponent<Aim>().SetTargetStatus(true);
+    }
+
+    private void SelectNewTarget(InputAction.CallbackContext context)
+    {
+        targetCount++;
+        SelectNewTarget();
+    }
+
+    private void OnEnable() =>    
+        playerInput.CharacterController.Enable();
+    
+
+    private void OnDisable() {
         playerInput.CharacterController.Disable();
     }
 

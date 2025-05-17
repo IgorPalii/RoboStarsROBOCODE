@@ -43988,17 +43988,9 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -82827330381376263, guid: 5cec8555724a6e84f91781dad206ed14, type: 3}
-      propertyPath: ObservedComponents.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1427567458524921204, guid: 5cec8555724a6e84f91781dad206ed14, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5493230921684660018, guid: 5cec8555724a6e84f91781dad206ed14, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5640024895532195697, guid: 5cec8555724a6e84f91781dad206ed14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -44038,10 +44030,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5640024895532195697, guid: 5cec8555724a6e84f91781dad206ed14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8000200246780442006, guid: 5cec8555724a6e84f91781dad206ed14, type: 3}
-      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

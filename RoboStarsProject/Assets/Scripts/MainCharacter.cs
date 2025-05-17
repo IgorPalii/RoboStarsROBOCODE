@@ -74,7 +74,7 @@ public class MainCharacter : MonoBehaviourPunCallbacks
         transform.rotation = rotateDir;
     }
 
-    private void Respawn()
+    public void Respawn()
     {
         cController.enabled = false;
         transform.position = spawnPos;
