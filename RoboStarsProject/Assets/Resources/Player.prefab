@@ -676,6 +676,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Render
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7fc9135ca986d8f4c981e9fa2a28b35c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 7fc9135ca986d8f4c981e9fa2a28b35c, type: 3}
       propertyPath: m_Controller
       value: 

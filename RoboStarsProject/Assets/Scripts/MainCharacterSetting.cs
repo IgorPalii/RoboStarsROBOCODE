@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System;
 
 public class MainCharacterSetting : MonoBehaviourPunCallbacks
 {
@@ -15,13 +16,25 @@ public class MainCharacterSetting : MonoBehaviourPunCallbacks
 
     private int health;
 
+    public Action<int> OnTakeDamage;
+
     private void Start()
     {
         health = MAX_HEALTH;
         healthBar.fillAmount = health;
     }
 
-    public void TakeDamage(int value)
+    private void OnEnable()
+    {
+        OnTakeDamage += TakeDamage;
+    }
+
+    private void OnDisable()
+    {
+        OnTakeDamage -= TakeDamage;
+    }
+
+    private void TakeDamage(int value)
     {
         pView.RPC("UpdateHealth", RpcTarget.All, value);
     }

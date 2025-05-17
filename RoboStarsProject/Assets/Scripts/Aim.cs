@@ -27,14 +27,14 @@ public class Aim : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInputActions();
+        targets = new List<GameObject>();
     }
 
     private void Start()
     {
         if (!pView.IsMine) return;
 
-        targetMark.SetActive(false);
-        playerInput.CharacterController.ChangeTarget.started += SelectNewTarget;
+        targetMark.SetActive(false);       
     }
 
     private void FixedUpdate()
@@ -94,6 +94,8 @@ public class Aim : MonoBehaviour
             targetCount = 0;
         }
 
+        if (targets.Count == 0) return;
+
         targetObj = targets[targetCount];
         targets[targetCount].GetComponent<Aim>().SetTargetStatus(true);
     }
@@ -104,12 +106,31 @@ public class Aim : MonoBehaviour
         SelectNewTarget();
     }
 
-    private void OnEnable() =>    
+    private void OnFire(InputAction.CallbackContext context)
+    {
+        if (targetObj == null) return;
+
+        Vector3 dir = (targetObj.transform.position - transform.position).normalized;
+
+        var bullet = PhotonNetwork.Instantiate(Path.Combine("StandartFireball"), spawnT.position, Quaternion.identity);
+
+        bullet.GetComponent<Bullet>().OnSpawned?.Invoke(dir);
+        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), transform.GetComponent<Collider>());
+    }
+
+    private void OnEnable()
+    {
         playerInput.CharacterController.Enable();
+        playerInput.CharacterController.ChangeTarget.started += SelectNewTarget;
+        playerInput.CharacterController.Fire.started += OnFire;
+    }
     
 
-    private void OnDisable() {
+    private void OnDisable() 
+    {
         playerInput.CharacterController.Disable();
+        playerInput.CharacterController.ChangeTarget.started -= SelectNewTarget;
+        playerInput.CharacterController.Fire.started -= OnFire;
     }
 
     private void OnDrawGizmosSelected()
