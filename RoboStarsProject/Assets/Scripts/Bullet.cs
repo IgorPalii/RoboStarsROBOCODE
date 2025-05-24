@@ -43,6 +43,6 @@ public class Bullet : MonoBehaviour
 
     private void StartMove(Vector3 dir)
     {
-        rb.velocity = info.speed * dir;
+        rb.linearVelocity = info.speed * dir;
     }
 }
