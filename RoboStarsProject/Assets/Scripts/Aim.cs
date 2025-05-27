@@ -79,6 +79,8 @@ public class Aim : MonoBehaviour
             }
             else continue;
         }
+
+        if (targets.Count == 0) return;
         SelectNewTarget();
     }
 
