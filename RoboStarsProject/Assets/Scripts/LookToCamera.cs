@@ -6,7 +6,7 @@ public class LookToCamera : MonoBehaviour
 {
     private Camera charCamera;
 
-    private void Awake()
+    private void Start()
     {
         charCamera = Camera.main;
     }

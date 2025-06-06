@@ -15,6 +15,8 @@ public class MainCharacter : MonoBehaviourPunCallbacks
     [SerializeField]
     private PhotonView pViev;
     [SerializeField]
+    private GameObject cameraPrefab;
+
     private CameraFollow charCamera;
 
     private Vector2 movementInput;
@@ -29,9 +31,11 @@ public class MainCharacter : MonoBehaviourPunCallbacks
     {
         spawnPos = new Vector3 (-5, 8.15f, 2);
         InitInputActions();
-        if (!pViev.IsMine)
+        if (pViev.IsMine)
         {
-            Destroy(charCamera.gameObject);
+            var camera = Instantiate(cameraPrefab);
+            charCamera = camera.GetComponent<CameraFollow>();
+            charCamera.target = transform;
         }
     }
 

@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] 
-    private Transform target;
+    public Transform target { get; set; }
 
     private Vector3 cameraOffset, currentVector;
 
@@ -36,8 +35,6 @@ public class CameraFollow : MonoBehaviour
 
     public void SetOffset(Vector3 offset)
     {
-        if (offset.z < 0) cameraOffset = offset * 10;
-        else if (offset.z > 0) cameraOffset = offset * 3;
-        else cameraOffset = offset * 8;
+        cameraOffset = offset * 5;
     }
 }
