@@ -8,11 +8,12 @@ using Photon.Realtime;
 using ExitGames.Client.Photon;
 
 public class MainCharacterSetting : MonoBehaviourPunCallbacks
-{
-    [SerializeField] private GameNetworkManager gameManager;
+{    
     private const int MAX_HEALTH = 100;
     private const byte GAME_OVER_CODE = 112;
 
+    [SerializeField] 
+    private GameNetworkManager gameManager;
     [SerializeField]
     private PhotonView pView;
     [SerializeField]

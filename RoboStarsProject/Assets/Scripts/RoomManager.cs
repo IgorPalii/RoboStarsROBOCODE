@@ -17,6 +17,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
             return;
         }
         DontDestroyOnLoad(gameObject);
+        gameObject.AddComponent<PhotonView>();
         Instance = this; 
     }
 
