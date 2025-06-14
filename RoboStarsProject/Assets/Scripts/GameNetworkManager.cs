@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class GameNetworkManager : MonoBehaviour
 {
+    public static GameNetworkManager Instance;
+
     public UnityEvent OnGameOver;
     public UnityEvent OnGameWon;
     [SerializeField] private GameObject allPlayerUI;
